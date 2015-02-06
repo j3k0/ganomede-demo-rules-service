@@ -21,7 +21,10 @@ A game has the following fields:
 
 # Moves
 
-`moveData` and `moveResult` are game specific.
+ * `moveData`:
+   * `number`: 21
+
+Will substract 21 to the number of remaining stones. Should be less that the total.
 
 # /substract-game/v1/games [POST]
 
