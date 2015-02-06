@@ -15,6 +15,7 @@ A game has the following fields:
  * `status`: one of
    * `active`
    * `gameover`
+   * `inactive`
  * `gameData`:
    * `total`: remaining stones
    * `nMoves`: number of moves
@@ -31,18 +32,20 @@ Will substract 21 to the number of remaining stones. Should be less that the tot
 + Parameters
     + type (string) ... Type of game
 
+Generate an initial game state.
+
 ## body (application/json)
 
     {
         "id": "string",
-        "players": [ "some_username", "other_username" ]
+        "players": [ "some_username" ]
     }
 
 ## response [200] OK
 
     {
         "id": "string",
-        "players": [ "some_username", "other_username" ],
+        "players": [ "some_username" ],
         "turn": "some_username",
         "status": "active",
         "gameData": {
