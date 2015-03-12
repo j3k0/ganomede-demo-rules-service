@@ -14,7 +14,7 @@ postGame = (req, res, next) ->
     turn: players[0]
     status: "active"
     gameData:
-      total: 50 + Math.floor(Math.random() * 150)
+      total: 200
       nMoves: 0
   next()
 
@@ -45,6 +45,7 @@ postMove = (req, res, next) ->
   res.send
     id: id
     players: players
+    scores: [gameData.nMoves * 10]
     turn: turn
     status: status
     gameData:
