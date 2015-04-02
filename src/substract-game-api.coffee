@@ -2,6 +2,8 @@ restify = require "restify"
 log = require "./log"
 
 alternateTurn = (players, lastTurn) ->
+  if players.length == 1
+    return players[0]
   return if lastTurn == players[0] then players[1] else players[0]
 
 awardScores = (score, players, winner) ->
