@@ -20,8 +20,9 @@ postGame = (req, res, next) ->
   if !id or !players or !players.length
     return next new restify.BadRequestError "Missing required parameters"
 
-  res.send
+  res.json
     id: id
+    type: req.body.type
     players: players
     turn: players[0]
     status: "active"
