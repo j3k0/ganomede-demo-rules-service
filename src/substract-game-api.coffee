@@ -61,7 +61,7 @@ postMove = (req, res, next) ->
     id: id
     players: players
     type: req.body.type
-    scores: if !finished then zeroScores() else
+    scores: if !finished then zeroScores(players) else
       awardScores(gameData.nMoves * 10, players, turn)
     turn: if finished then turn else alternateTurn(players, turn)
     status: status
