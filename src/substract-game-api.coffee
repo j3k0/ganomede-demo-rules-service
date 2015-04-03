@@ -1,6 +1,18 @@
 restify = require "restify"
 log = require "./log"
 
+alternateTurn = (players, lastTurn) ->
+  if players.length == 1
+    return players[0]
+  return if lastTurn == players[0] then players[1] else players[0]
+
+awardScores = (score, players, winner) ->
+  return players.map (player) ->
+    return if player == winner then score else 0
+
+zeroScores = (players) ->
+  return players.map () -> 0
+
 postGame = (req, res, next) ->
   id = req.body?.id
   players = req.body?.players
@@ -8,8 +20,9 @@ postGame = (req, res, next) ->
   if !id or !players or !players.length
     return next new restify.BadRequestError "Missing required parameters"
 
-  res.send
+  res.json
     id: id
+    type: req.body.type
     players: players
     turn: players[0]
     status: "active"
@@ -25,6 +38,7 @@ postMove = (req, res, next) ->
   status = req.body?.status
   gameData = req.body?.gameData
   moveData = req.body?.moveData
+  finished = false
 
   if (!id or !players or !turn or
     !status or !gameData or !moveData
@@ -41,12 +55,15 @@ postMove = (req, res, next) ->
 
   if gameData.total == 0
     status = "gameover"
+    finished = true
 
   res.send
     id: id
     players: players
-    scores: [gameData.nMoves * 10]
-    turn: turn
+    type: req.body.type
+    scores: if !finished then zeroScores(players) else
+      awardScores(gameData.nMoves * 10, players, turn)
+    turn: if finished then turn else alternateTurn(players, turn)
     status: status
     gameData:
       total: gameData.total
