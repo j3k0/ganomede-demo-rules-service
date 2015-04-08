@@ -1,17 +1,17 @@
 {
-  "name": "substract-game",
-  "version": "1.0.0",
+  "name": "ganomede-substract-game",
+  "version": "1.1.0",
   "api": "substract-game/v1",
   "description": "substract-game rules micro service",
   "private": true,
-  "main": "index.js",
+  "main": "lib.js",
   "scripts": {
     "start": "./node_modules/.bin/forever start index.js",
     "stop": "./node_modules/.bin/forever stop index.js",
     "test": "make test"
   },
   "author": "Jean-Christophe Hoelt <hoelt@fovea.cc>",
-  "license": "Private",
+  "license": "GPL",
   "dependencies": {
     "blanket": "^1.1.6",
     "bunyan": "^1.2.3",
