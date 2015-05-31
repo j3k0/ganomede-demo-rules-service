@@ -3,7 +3,6 @@
   "version": "1.1.0",
   "api": "substract-game/v1",
   "description": "substract-game rules micro service",
-  "private": true,
   "main": "lib.js",
   "scripts": {
     "start": "./node_modules/.bin/forever start index.js",
