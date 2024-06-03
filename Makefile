@@ -1,12 +1,15 @@
 BUNYAN_LEVEL?=1000
 
-all: install test
+all: install build test
+
+build: check
+	npm run build
 
 check: install
 	./node_modules/.bin/eslint src/
 	./node_modules/.bin/coffeelint -q src tests
 
-test: check
+test: build
 	./node_modules/.bin/mocha -b --compilers coffee:coffee-script/register tests | ./node_modules/.bin/bunyan -l ${BUNYAN_LEVEL}
 
 coverage: test
@@ -14,7 +17,7 @@ coverage: test
 	./node_modules/.bin/mocha -b --compilers coffee:coffee-script/register --require blanket -R html-cov tests | ./node_modules/.bin/bunyan -l ${BUNYAN_LEVEL} > doc/coverage.html
 	@echo "coverage exported to doc/coverage.html"
 
-run: check
+run: build check
 	node index.js | ./node_modules/.bin/bunyan -l ${BUNYAN_LEVEL}
 
 start-daemon:

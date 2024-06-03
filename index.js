@@ -1,5 +1,3 @@
-require('coffee-script/register');
-
 var cluster = require("cluster")
 var log = require("./src/log")
 var pkg = require("./package.json");
@@ -21,13 +19,13 @@ else {
 
     // worker
     var restify = require("restify");
-    var main = require("./src/main");
+    var main = require("./dist/main");
 
     var server = restify.createServer();
 
     // Enable restify plugins
-    server.use(restify.bodyParser());
-    server.use(restify.gzipResponse());
+    server.use(restify.plugins.bodyParser());
+    server.use(restify.plugins.gzipResponse());
 
     // Intitialize backend, add routes
     main.initialize();
@@ -57,7 +55,7 @@ else {
             // a new worker.
             cluster.worker.disconnect();
 
-            var InternalError = require('restify').InternalError;
+            var InternalError = require('restify-errors').InternalError;
             res.send(new InternalError(err, err.message || 'unexpected error'));
         }
         catch (err2) {

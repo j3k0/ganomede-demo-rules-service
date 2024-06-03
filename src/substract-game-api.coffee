@@ -1,4 +1,5 @@
 restify = require "restify"
+restifyErrors = require "restify-errors"
 log = require "./log"
 
 alternateTurn = (players, lastTurn) ->
@@ -18,7 +19,7 @@ postGame = (req, res, next) ->
   players = req.body?.players
 
   if !id or !players or !players.length
-    return next new restify.BadRequestError "Missing required parameters"
+    return next new restifyErrors.BadRequestError "Missing required parameters"
 
   res.json
     id: id
@@ -42,13 +43,14 @@ postMove = (req, res, next) ->
 
   if (!id or !players or !turn or
     !status or !gameData or !moveData
-  ) then return next new restify.BadRequestError "Missing required parameters"
+  ) then return next new restifyErrors.BadRequestError(
+    "Missing required parameters")
 
   gameData.total -= moveData.number
   gameData.nMoves += 1
 
   if gameData.total < 0
-    return res.send new restify.RestError
+    return res.send new restifyErrors.RestError
       statusCode: 400
       restCode: "InvalidMove"
       message: "Impossible to perform requested move"
