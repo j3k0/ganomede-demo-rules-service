@@ -1,6 +1,6 @@
 {
   "name": "ganomede-substract-game",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "api": "substract-game/v1",
   "description": "substract-game rules micro service",
   "main": "lib.js",
